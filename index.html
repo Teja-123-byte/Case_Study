@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AuthAtlas — 100 App Research</title>
+  <style>
+    :root { --bg:#080a0f; --panel:#10131a; --line:#232936; --text:#f4f7fb; --muted:#8e98aa; --accent:#8062d8; --cyan:#62d7de; --green:#65d19e; --amber:#f2bb68 }
+    * { box-sizing:border-box }
+    body { margin:0; font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text) }
+    .shell { display:grid; grid-template-columns:230px 1fr; min-height:100vh }
+    aside { border-right:1px solid var(--line); background:#0b0d12; padding:24px 16px; position:sticky; top:0; height:100vh }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:-.3px; margin:0 8px 28px }
+    .mark { width:29px;height:29px;border-radius:9px;background:linear-gradient(135deg,#9c75ff,#4dc5c9);display:grid;place-items:center;font-size:14px }
+    nav button { width:100%;border:0;background:none;color:var(--muted);text-align:left;padding:11px 12px;border-radius:8px;margin:2px 0;cursor:pointer }
+    nav button.active { background:#171a22;color:white }
+    main { padding:28px 34px 60px; max-width:1500px;width:100% }
+    .topbar { display:flex;justify-content:space-between;align-items:center;margin-bottom:24px }
+    h1,h2,h3,p { margin-top:0 } h1 { font-size:27px;letter-spacing:-1px;margin-bottom:5px }.eyebrow { color:var(--muted);font-size:13px }
+    .actions { display:flex;gap:8px }.btn { border:1px solid var(--line);background:#151821;color:white;border-radius:8px;padding:9px 12px;cursor:pointer;font-weight:650 }.btn.primary { border-color:#9a78f4;background:#8062d8 }.btn:disabled { opacity:.5 }
+    .stats { display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px }
+    .card { background:var(--panel);border:1px solid var(--line);border-radius:12px }.stat { padding:17px }.stat span { color:var(--muted);font-size:12px }.stat strong { display:block;font-size:24px;margin-top:8px;letter-spacing:-.7px }
+    .grid { display:grid;grid-template-columns:1.3fr .7fr;gap:12px;margin-bottom:16px }.panel { padding:18px }.panel h3 { font-size:14px;margin-bottom:16px }
+    .category-row { display:grid;grid-template-columns:155px 1fr 40px;align-items:center;gap:10px;margin:9px 0;font-size:12px;color:#c7cdd8 }
+    .bar { height:7px;background:#252a35;border-radius:99px;overflow:hidden }.bar i { display:block;height:100%;background:linear-gradient(90deg,#8062d8,#69c6cd);border-radius:99px }
+    .auth-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px }.auth { padding:11px;border:1px solid var(--line);border-radius:9px }.auth div:first-child { display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px }.auth strong { color:white }
+    .filters { display:flex;gap:8px;margin:0 0 12px }.input,.select { background:#0d1016;border:1px solid var(--line);color:white;border-radius:8px;padding:9px 11px;outline:none }.input { width:260px }.select { max-width:210px }
+    table { width:100%;border-collapse:collapse;font-size:13px }th { color:var(--muted);text-align:left;font-weight:600;padding:11px;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:.4px }td { padding:12px 11px;border-bottom:1px solid #1b2029 }tbody tr { cursor:pointer }tbody tr:hover { background:#131722 }
+    .app-name { font-weight:700 }.category { color:var(--muted);font-size:12px }.pill { display:inline-flex;padding:4px 7px;border-radius:99px;background:#252a35;color:#cbd2df;font-size:11px }.pill.pending { background:#27251d;color:#d9b66e }.pill.completed { background:#173125;color:#79cda3 }.muted { color:var(--muted) }
+    .drawer { position:fixed;right:0;top:0;width:min(520px,92vw);height:100vh;background:#0f1218;border-left:1px solid var(--line);padding:24px;overflow:auto;transform:translateX(100%);transition:.25s;z-index:10 }.drawer.open { transform:none }.drawer-head { display:flex;justify-content:space-between;align-items:start }.close { background:none;border:0;color:white;font-size:22px;cursor:pointer }
+    .detail-grid { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 }.detail { padding:11px;border:1px solid var(--line);border-radius:8px }.detail span { display:block;color:var(--muted);font-size:11px;margin-bottom:5px }
+    .job { margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:8px;font-size:12px }.job-log { max-height:120px;overflow:auto;white-space:pre-wrap;color:var(--muted);font-size:11px }
+    .hidden { display:none }a { color:#bca7ff;text-decoration:none }
+    @media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.shell{grid-template-columns:76px 1fr}aside{padding:20px 10px}.brand span:last-child,nav button span{display:none}.brand{margin-left:13px}nav button{text-align:center}}
+    @media(max-width:700px){main{padding:20px 14px}.shell{display:block}aside{display:none}.stats{grid-template-columns:1fr 1fr}.topbar{align-items:flex-start}.actions{flex-wrap:wrap;justify-content:flex-end}.filters{flex-wrap:wrap}.input{width:100%}.category-row{grid-template-columns:120px 1fr 30px}table{min-width:850px}.table-wrap{overflow:auto}.auth-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <aside><div class="brand"><div class="mark">A</div><span>AuthAtlas</span></div><nav><button class="active">O <span>Overview</span></button><button onclick="document.querySelector('.table-wrap').scrollIntoView()"># <span>Applications</span></button><button onclick="openResearch()">R <span>Research</span></button><button onclick="document.getElementById('methodology').scrollIntoView()">i <span>Methodology</span></button></nav></aside>
+  <main>
+    <div class="topbar"><div><h1>Authentication Research</h1><div class="eyebrow">100 applications across 10 categories</div></div><div class="actions"><button class="btn" onclick="exportData()">Export CSV</button><button class="btn" onclick="exportJson()">Export JSON</button><button class="btn primary" onclick="startResearch()">Start research</button></div></div>
+    <section class="stats" id="stats"></section>
+    <section class="grid"><div class="card panel"><h3>Category progress</h3><div id="categories"></div></div><div class="card panel"><h3>Authentication coverage</h3><div class="auth-grid" id="auths"></div></div></section>
+    <section id="researchPanel" class="card panel hidden" style="margin-bottom:16px"><h3>Research controls</h3><div class="filters"><select class="select" id="scope"><option value="all">All 100 applications</option><option value="category">One category</option><option value="application">One application</option></select><input class="input" id="scopeName" placeholder="Scope name (e.g. CRM and Sales)"><button class="btn primary" onclick="startScoped()">Run</button><button class="btn" onclick="pauseResearch()">Pause</button><button class="btn" onclick="resumeResearch()">Resume</button><button class="btn" onclick="retryResearch()">Retry failed</button></div><div id="jobs"></div></section>
+    <section><div class="filters"><input class="input" id="search" placeholder="Search applications…" oninput="loadApps()"><select class="select" id="categoryFilter" onchange="loadApps()"><option value="">All categories</option></select><select class="select" id="statusFilter" onchange="loadApps()"><option value="">All research statuses</option><option value="pending">Pending</option><option value="completed">Completed</option></select></div><div class="card table-wrap"><table><thead><tr><th>Application</th><th>Login method</th><th>OAuth</th><th>MFA</th><th>Free signup</th><th>API access</th><th>Status</th></tr></thead><tbody id="apps"></tbody></table></div></section>
+    <section id="methodology" class="card panel" style="margin-top:16px"><h3>Methodology and limits</h3><p class="muted">Research jobs make read-only requests to each application’s public website. A successful probe confirms only that the public site responded; it does not verify login options, MFA, signup requirements, or API access. Those fields remain unknown until supported by evidence.</p><p class="muted">The workflow does not create accounts, submit personal information, bypass CAPTCHA or MFA, or access paid resources. Job logs record probe outcomes.</p></section>
+  </main>
+</div>
+<div class="drawer" id="drawer"><div class="drawer-head"><div><div class="eyebrow" id="detailCategory"></div><h2 id="detailName"></h2></div><button class="close" onclick="closeDrawer()">×</button></div><div id="detailBody"></div></div>
+<script>
+const yes=(v)=>v===true?"Yes":v===false?"No":"Unknown";
+const escapeHtml=(value)=>String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+async function api(path,options){const r=await fetch(path,options);if(!r.ok)throw new Error("API request failed");const ct=r.headers.get("content-type")||"";return ct.includes("json")?r.json():r}
+async function init(){await refreshOverview();await loadApps();await loadJobs();setInterval(loadJobs,5000)}
+async function refreshOverview(){
+  const data=await api("/api/overview"),t=data.totals;
+  document.getElementById("stats").innerHTML=[["Applications",t.total],["Researched",t.researched],["Pending",t.pending],["Blocked",t.blocked],["Completion",t.completion+"%"]].map(x=>`<div class="card stat"><span>${x[0]}</span><strong>${x[1]}</strong></div>`).join("");
+  document.getElementById("categories").innerHTML=data.categories.map(c=>{const pct=Math.round(c.researched/c.total*100);return `<div class="category-row"><span>${c.category}</span><div class="bar"><i style="width:${pct}%"></i></div><span>${pct}%</span></div>`}).join("");
+  const filter=document.getElementById("categoryFilter");filter.innerHTML='<option value="">All categories</option>'+data.categories.map(c=>`<option>${c.category}</option>`).join("");
+  await authStats();
+}
+async function authStats(){
+  const rows=await api("/api/applications");const metrics=[["Google OAuth","google_oauth"],["Microsoft","microsoft_oauth"],["GitHub","github_oauth"],["Email/password","email_password"],["Magic link","magic_link"],["SSO/SAML","sso_saml"],["MFA","mfa_available"],["API key","api_authentication"]];
+  document.getElementById("auths").innerHTML=metrics.map(([name,key])=>{const known=rows.filter(r=>r[key]!==null&&r[key]!==undefined);const positive=known.filter(r=>r[key]===true||(typeof r[key]==="string"&&/api[_ -]?key/i.test(r[key]))).length;const pct=known.length?Math.round(positive/known.length*100):0;return `<div class="auth"><div><span>${name}</span><strong>${pct}%</strong></div><div class="bar"><i style="width:${pct}%"></i></div><div style="font-size:11px;color:var(--muted);margin-top:7px">${known.length} verified · ${rows.length-known.length} unknown</div></div>`}).join("");
+}
+async function loadApps(){
+  const p=new URLSearchParams({search:document.getElementById("search").value,category:document.getElementById("categoryFilter").value,status:document.getElementById("statusFilter").value});
+  const apps=await api("/api/applications?"+p);
+  document.getElementById("apps").innerHTML=apps.map(a=>{const oauth=[a.google_oauth===true?"Google":null,a.microsoft_oauth===true?"Microsoft":null,a.github_oauth===true?"GitHub":null].filter(Boolean).join(", ")||"Unknown";return `<tr onclick="openDetail(${Number(a.id)})"><td><div class="app-name">${escapeHtml(a.app_name)}</div><div class="category">${escapeHtml(a.category)}</div></td><td>${a.email_password===true?"Email + password":"Unknown"}</td><td>${oauth}</td><td>${yes(a.mfa_available)}</td><td>${yes(a.free_signup)}</td><td>${yes(a.api_available)}</td><td><span class="pill">${escapeHtml(a.research_status)}</span></td></tr>`}).join("")||'<tr><td colspan="7" class="muted" style="padding:24px">No applications match these filters.</td></tr>';
+}
+async function openDetail(id){
+  const a=await api("/api/applications/"+id);document.getElementById("detailCategory").textContent=a.category;document.getElementById("detailName").textContent=a.app_name;
+  const links=[["Official website",a.official_website],["Login",a.login_url],["Signup",a.signup_url]];
+  document.getElementById("detailBody").innerHTML=`<div>${links.map(([n,v])=>v?`<a href="${v}" target="_blank" rel="noopener">${n} ↗</a>`:`<span class="muted">${n}: Unknown</span>`).join("<br>")}</div><div class="detail-grid">${[["Email/password",yes(a.email_password)],["Google OAuth",yes(a.google_oauth)],["Microsoft OAuth",yes(a.microsoft_oauth)],["GitHub OAuth",yes(a.github_oauth)],["Apple",yes(a.apple_oauth)],["Magic link",yes(a.magic_link)],["SSO/SAML",yes(a.sso_saml)],["MFA",yes(a.mfa_available)],["Free signup",yes(a.free_signup)],["API access",yes(a.api_available)],["Confidence",a.confidence_score??"Unknown"],["Access",a.access_status]].map(([n,v])=>`<div class="detail"><span>${n}</span><strong>${v}</strong></div>`).join("")}</div><h3>Research findings</h3><p class="muted">${a.findings||"No findings recorded. The application is pending or unknown."}</p><h3>Limitations</h3><p class="muted">${a.blockers||"No blockers recorded."}</p>`;
+  document.getElementById("drawer").classList.add("open");
+}
+function closeDrawer(){document.getElementById("drawer").classList.remove("open")}function openResearch(){document.getElementById("researchPanel").classList.toggle("hidden")}
+async function startResearch(){openResearch();await api("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"});await loadJobs()}
+async function startScoped(){const scope=document.getElementById("scope").value,scope_name=document.getElementById("scopeName").value||null;await api("/api/research",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({scope,scope_name})});await loadJobs()}
+async function pauseResearch(){await api("/api/research/pause",{method:"POST"});await loadJobs()}
+async function resumeResearch(){await api("/api/research/resume",{method:"POST"});await loadJobs()}
+async function retryResearch(){await api("/api/research/retry",{method:"POST"});await loadJobs()}
+async function loadJobs(){try{const jobs=await api("/api/jobs");document.getElementById("jobs").innerHTML=jobs.map(j=>`<div class="job"><strong>${j.status}</strong> · ${j.completed}/${j.total}${j.current_app?" · "+j.current_app:""}<div class="job-log">${j.log||""}</div></div>`).join("")}catch(e){}await refreshOverview();await loadApps()}
+function exportData(){location.href="/api/export"}
+function exportJson(){location.href="/api/export.json"}
+init();
+</script>
+</body>
+</html>

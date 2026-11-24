@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+*.pyc
+research.db
+research-export.csv
+.env
