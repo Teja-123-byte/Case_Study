@@ -5,6 +5,7 @@ from pathlib import Path
 from fastapi.testclient import TestClient
 
 import backend
+from research_engine import text_has
 
 
 class BackendTests(unittest.TestCase):
@@ -45,6 +46,10 @@ class BackendTests(unittest.TestCase):
         response = self.client.get("/api/export.json")
         self.assertEqual(response.status_code, 200)
         self.assertIn("filename", response.headers.get("content-disposition", "").lower())
+
+    def test_public_text_indicator_detection_is_conservative(self):
+        self.assertTrue(text_has("Sign in with Google", ("google",)))
+        self.assertFalse(text_has("Privacy policy", ("google",)))
 
 
 if __name__ == "__main__":
