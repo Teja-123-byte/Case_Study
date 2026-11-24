@@ -4,3 +4,4 @@ __pycache__/
 research.db
 research-export.csv
 .env
+.env.example
